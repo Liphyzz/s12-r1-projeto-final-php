@@ -12,34 +12,35 @@ Estrutura Baseada na ISO/IEC/IEEE 29148:2018
 
 **Data:** 2026-05-28
 
-
 ## 2. Introdução
 
 ### 2.1 Propósito
 
-Este documento descreve as especificações, regras de negócio, restrições, requisitos funcionais e requisitos não funcionais da evolução do site de enciclopédia colaborativa "The Battle Cats Wiki", desenvolvido em Flutter, com o uso de Provider.
+Este documento descreve as especificações, regras de negócio, restrições, requisitos funcionais e requisitos não funcionais da evolução do site de enciclopédia colaborativa "The Battle Cats Wiki", desenvolvido em formato de site, feito em php.
 
 O objetivo é fornecer uma base clara para desenvolvimento, validação e avaliação do sistema.
 
 ### 2.2 Escopo
 
-O sistema consiste em um aplicativo mobile que permite ao usuário:
+O sistema consiste em uma melhoria do site "The Battle Cats Wiki" que implementará:
 
-- registrar hábitos sustentáveis;
-- acompanhar ações realizadas;
-- visualizar progresso ambiental;
-- gerenciar preferências do aplicativo.
+- Uma melhora na aparência, nível de informação e consistência dos dados;
+- Adicionar, atualizar, listar e deletar itens, gatos e inimigos referêntes ao jogo mobile;
+- Uma nova funcionalidade: comparar gatos ou inimigos;
+- Parte dedicada à informações sobre o jogo e dicas de fases;
+- Apenas Adms (pessoas com conta aprovada no site) podem adicionar, atualizar e deletar, para aumentar a confiabilidade do site.
+- Aba para fórum.
 
-O aplicativo será desenvolvido utilizando Flutter e gerenciamento de estado com Provider.
+O sistema será produzido puramente em php.
 
 ### 2.3 Definições, Acrônomos e Abreviações
 
 |Termo|Definição|
 |---|---|
-|Flutter|Framework para construir aplicações mobile com a linguagem dart|
-|Provider|Gerenciador de estado global do Flutter (permite guardar informações de uma tele em uma classe espacial e depois passar essas informações à outras telas ou ao Banco de Dados)|
-|DashBoard|Tela de resumo com dados do usuário|
-|Hábito|Ação sustentável registrada no sistema|
+|PHP|Linguagem de programação segura, boa e de fácil implementação e integração com o frontend|
+|Wiki| Plataforma estruturada em páginas interligadas que facilita a criação, edição e versionamento centralizado de conteúdo. |
+|The Battle Cats|Jogo eletrônico mobile 2D no estilo de spam de tropas (gatos de batalha) em uma arena com o intuito de conquistar a base do inimigo e proteger a sua própria|
+|XPTO|XPTO|
 
 ### 2.4 Visão Geral do Documento
 
@@ -57,24 +58,32 @@ Este documento está organizado em:
 
 ### 3.1 Perspectiva do produto
 
-O sistema é um aplicativo independente (standalone), sem necessidade de backend neste protótipo.
+O sistema é uma wiki sobre o jogo The Battle Cats, porém turbinada.
 
 ### 3.2 Funções do Produto
 
 O sistema deverá:
 
-- Exibir tela inicial de apresentação
-- Permitir navegação entre telas
-- Gerenciar hábitos pendentes e concluídos
-- Atualizar automaticamente dados do dashboard
-- Permitir configurações do usuário
+<!-- REsumir e detalhar só nos requisitos (aqui conceito, requisitos detalhamento técnico) -->
+- Ter uma tela inicial (Home);
+- Ter uma tela para informações e dicas;
+- Ter uma tela para fórum;
+- Ter uma tela com todos os gatos e possibilidade de filtrar;
+- Ter uma tela com todos os inimigos e possibilidade de filtrar;
+- Ter uma tela com todos os itens e possibilidade de filtrar;
+- Ter uma tela para comparação entre gatos e/ou inimigos;
+- Ter uma tela de mod -> para adição, modificação e exclusão, com seção individual para gatos, inimigos e itens;
+- Garantir que só membros autorizados acessem a tela de mod;
+- Permitir navegação entre telas;
 
 ### 3.3 Características do Usuário
 
 Usuários esperados:
 
-- Pessoas interessadas em sustentabilidade
-- Usuários com conhecimento básico em aplicativos mobile
+- Gamers curiosos;
+- Jogadores de The Battle Cats;
+- Nerds;
+- Crianças e adolescentes.
 
 ### 3.4 Restrições
 
