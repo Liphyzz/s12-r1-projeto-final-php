@@ -184,14 +184,14 @@ A entidade Gato deve conter:
 
 ```postgresql
 CREATE TABLE Gatos (
-  id INT AUTO_INCREMENT PRIMARY KEY,
+  id SERIAL PRIMARY KEY,
   raridade VARCHAR(15) NOT NULL,
   CONSTRAINT chk_raridade CHECK (raridade IN ('Normal', 'Especial', 'Raro', 'Super Raro', 'Uber Super Raro', 'Lenda Rara')),
   nome VARCHAR(40) NOT NULL,
   vida INT NOT NULL,
   atq INT NOT NULL,
   vel_atq DECIMAL(5,2) NOT NULL,
-  dps DECIMAL (10,2) NOT NULL,
+  dps DECIMAL(10,2) NOT NULL,
   alcance_atq INT NOT NULL,
   tipo_atq VARCHAR(5) NOT NULL,
   CONSTRAINT chk_tipo_atq CHECK (tipo_atq IN ('Único', 'Área')),
@@ -206,7 +206,7 @@ CREATE TABLE Gatos (
         OR bom_contra <@ ARRAY['Vermelho', 'Flutuante', 'Preto', 'Metal', 'Anjo', 'Alien', 'Zumbi', 'Relíquia', 'Aku', 'Sem Características']::text[]
     ),
   hab_especiais TEXT[],
-  custo INT NOT NULL,
+  custo INT NOT NULL
 );
 ```
 
@@ -216,7 +216,7 @@ A entidade Inimigo deve conter:
 
 ```postgresql
 CREATE TABLE Inimigos (
-  id INT AUTO_INCREMENT PRIMARY KEY,
+  id SERIAL PRIMARY KEY,
   nome VARCHAR(40) NOT NULL,
   vida INT NOT NULL,
   atq INT NOT NULL,
@@ -231,7 +231,7 @@ CREATE TABLE Inimigos (
   CONSTRAINT chk_tipo CHECK (
         tipo <@ ARRAY['Vermelho', 'Flutuante', 'Preto', 'Metal', 'Anjo', 'Alien', 'Zumbi', 'Relíquia', 'Aku', 'Sem Características']::text[]
     ),
-  hab_especiais TEXT[],
+  hab_especiais TEXT[]
 );
 ```
 
@@ -239,12 +239,12 @@ CREATE TABLE Inimigos (
 
 A entidade Recurso deve conter:
 
-```sql
+```postgresql
 CREATE TABLE Recursos (
-  id INT AUTO_INCREMENT PRIMARY KEY,
+  id SERIAL PRIMARY KEY,
   tipo VARCHAR(20) NOT NULL,
   nome VARCHAR(25) NOT NULL,
-  descricao TEXT NOT NULL,
+  descricao TEXT NOT NULL
 );
 ```
 
@@ -252,14 +252,28 @@ CREATE TABLE Recursos (
 
 A entidade Fase deve conter:
 
-```sql
+```postgresql
 CREATE TABLE Fases (
-  id INT AUTO_INCREMENT PRIMARY KEY,
+  id SERIAL PRIMARY KEY,
   tipo VARCHAR(18) NOT NULL,
   subtipo VARCHAR(25),
   nome VARCHAR(25) NOT NULL,
   descricao TEXT NOT NULL,
-  dicas TEXT,
+  dicas TEXT
+);
+```
+
+### 6.5 Entidade Usuário
+
+A entidade Usuário deve conter:
+
+```postgresql
+CREATE TABLE Usuarios (
+  id SERIAL PRIMARY KEY,
+  nome VARCHAR(40),
+  email VARCHAR(40),
+  senha_hash VARCHAR(67)
+  is_membro BOOLEAN DEFAULT FALSE
 );
 ```
 
@@ -286,7 +300,7 @@ Root/
  ├── public/
  │   ├── assets/
  │   │   ├── css/
- │   │   └── imgs/
+ │   │   └── img/
  │   ├── auth/
  │   ├── fases/
  │   ├── gatos/
@@ -306,7 +320,15 @@ Root/
 
 O sistema será considerado válido se:
 
-
+- Arquivos separados
+- Conexão reutilizada
+- Código comentado
+- Fluxo funcional completo
 
 ## 10. Entregáveis
 
+Link do projeto no github contendo:
+- Documentação
+- Prototipagem
+- Projeto em si
+- Dump do DB 
