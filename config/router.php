@@ -1,16 +1,43 @@
-<?php 
-$pdo = require_once('database.php'); // Importa o db
+<?php
 
-$stmt = $pdo->prepare("SELECT is_membro FROM Usuarios WHERE email = :email"); // prepara para selecionar o campo membro da tabela usuários em que o email do usuário for "X" (será definido depois)
+$pdo = require_once "../../config/database.php" ; // Importa o db
 
-$stmt->execute(['email' => $_GET['usermail']]); // Define o "X" da linha anterior e executa o comando SELECT
+$pagina_atual = $_SERVER['SCRIPT_NAME']; //Verifica em qual página está
 
-$membro = $stmt->fetch(); // Armazena o resultado da busca na variável
-
-if ($membro) { // verifica se o usuário é membro
-    return $page_config = "membro";
+# PROCESSAMENTO LOGIN/LOGOUT
+if (strpos($pagina_atual, 'cadastro_page.php') !== false) {
+    require_once "../../src/actions/auth/cadastro.php";
 }
-else {
-    return $page_config = "user comum";
+else if (strpos($pagina_atual, 'login_page.php') !== false) {
+    require_once "../../src/actions/auth/login.php";
+}
+
+# VERIFICAÇÃO NÍVEL DE ACESSO DO USUÁRIO
+$email_sessao = $_SESSION['usermail'] ?? null;
+if ($email_sessao) {
+    // Se existe um e-mail na sessão (porque o cadastro acabou de acontecer ou o user está logado)
+    $stmt = $pdo->prepare("SELECT * FROM Usuarios WHERE email = :email");
+    $stmt->execute(['email' => $email_sessao]);
+    $usuario = $stmt->fetch();
+
+    if ($usuario && $usuario['is_membro'] == true) {
+        $_SESSION['userlvl'] = "membro";
+    } else {
+        $_SESSION['userlvl'] = "user comum";
+    }
+} else {
+    // Se a página acabou de carregar e ninguém enviou formulário ainda
+    $_SESSION['userlvl'] = "user comum";
+}
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    if (strpos($pagina_atual, 'cadastro_page.php') !== false && $sucesso_cadastro) {
+        header("Location: login_page.php"); 
+        exit;
+    }
+    else if (strpos($pagina_atual, 'login_page.php') !== false &&  $_SESSION['status'] === 'logado') {
+        header("Location: perfil_page.php");
+        exit;
+    }
 }
 ?>

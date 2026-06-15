@@ -1,0 +1,125 @@
+main {
+    padding: 7vh 5vw 7vh 5vw;
+}
+
+/* Container geral da página para dar espaçamento das bordas do navegador */
+.container-wiki {
+    display: flex;
+    flex-direction: column;
+    gap: 5vh;
+    width: 100%;
+    margin: 0 auto;
+    padding: 40px 20px;
+    font-family: 'Arial', sans-serif; /* Altere para a fonte do seu projeto se preferir */
+}
+
+/* Configuração de cada linha como Flexbox */
+.wiki-row {
+    display: flex;
+    align-items: stretch;
+    gap: 30px; /* Distância entre o bloco de texto e o bloco de imagem */
+    width: 100%;
+}
+
+/* Divide o espaço igualmente: 60% para o bloco maior e 40% para o menor */
+.wiki-text-block {
+    flex: 6;
+    display: flex;
+    flex-direction: column;
+}
+
+.wiki-image-block {
+    flex: 4;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Estilização dos textos baseados no wireframe */
+.wiki-title {
+    font-size: 2.5rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    margin: 0 0 15px 0;
+    color: #000;
+}
+
+.wiki-subtitle {
+    font-size: 2rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    margin: 0 0 15px 0;
+    color: #000;
+}
+
+/* Alinha o subtítulo para a direita na segunda linha */
+.right-align {
+    align-items: flex-end;
+    text-align: right;
+}
+
+/* Caixas cinzas de texto */
+.wiki-text-box {
+    background-color: #e0e0e0;
+    padding: 10px;
+    border-radius: 5px;
+    flex-grow: 1; /* Faz a caixa ocupar toda a altura disponível */
+}
+
+.wiki-text-box p {
+    margin: 0;
+    line-height: 1.6;
+    color: #333;
+    font-size: 1.1rem;
+}
+
+/* Caixas cinzas com o "X" imitando o seu wireframe */
+.placeholder-img-placeholder {
+    background-color: #e0e0e0;
+    border: 1px solid #999;
+    height: 100%;
+    min-height: 250px; /* Garante uma altura mínima visível */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    border-radius: 4px;
+}
+
+/* Cria as linhas diagonais do "X" de forma automática com CSS */
+.placeholder-img-placeholder::before,
+.placeholder-img-placeholder::after {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 1px;
+    background-color: #999;
+    top: 50%;
+    left: 0;
+}
+.placeholder-img-placeholder::before { transform: rotate(22deg); }
+.placeholder-img-placeholder::after { transform: rotate(-22deg); }
+
+/* Remove a linha de marcação e deixa o X centralizado */
+.placeholder-img-placeholder span {
+    font-size: 2rem;
+    color: #777;
+    z-index: 1;
+    background: #e0e0e0;
+    padding: 5px 10px;
+}
+
+/* Responsividade: se a tela for pequena (celular), empilha tudo um embaixo do outro */
+@media (max-width: 768px) {
+    .wiki-row, .wiki-row.reverse {
+        flex-direction: column !important;
+    }
+    .right-align {
+        align-items: flex-start;
+        text-align: left;
+    }
+    .placeholder-img-placeholder::before,
+    .placeholder-img-placeholder::after {
+        display: none; /* Remove as diagonais no celular para não distorcer */
+    }
+}

@@ -1,0 +1,103 @@
+.div-principal {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 20px;
+    width: 100%;
+}
+
+.title {
+    color: #4a3b2c;
+    font-size: 32px;
+    text-align: center;
+    text-shadow: 2px 2px 0px #00000010;
+    margin: 0 0 20px 0;
+}
+
+form {
+    background-color: #ffffff;
+    width: 100%;
+    max-width: 400px;
+    padding: 30px;
+    border: 3px solid #000000; /* Borda grossa estilo cartoon do jogo */
+    border-radius: 8px;
+    box-shadow: 6px 6px 0px #00000015; /* Sombra sólida */
+    display: flex;
+    flex-direction: column;
+}
+
+form label {
+    font-weight: bold;
+    color: #4a3b2c;
+    font-size: 16px;
+    margin-top: 15px;
+    margin-bottom: 5px;
+}
+
+/* Remove o espaçamento do topo apenas no primeiro label */
+form label:first-of-type {
+    margin-top: 0;
+}
+
+/* Estilo dos campos de digitação (Inputs) */
+form input {
+    width: 100%;
+    padding: 12px;
+    font-size: 15px;
+    background-color: #FDFBF7;
+    border: 2px solid #00000020;
+    border-radius: 4px;
+    outline: none;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* Efeito quando o usuário clica para digitar no input */
+form input:focus {
+    border-color: #FFA425; /* Cor laranja do seu banner */
+    box-shadow: 0 0 0 3px #FFA42530; /* Brilho sutil ao redor */
+    background-color: #ffffff;
+}
+
+/* Estilo do botão de Enviar */
+#btn-enviar {
+    width: 100%;
+    padding: 14px;
+    margin-top: 25px;
+    background-color: #FFA425; /* Laranja do banner */
+    color: #ffffff;
+    border: 2px solid #000000;
+    border-radius: 4px;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0px 4px 0px #cc7a00; /* Efeito 3D de botão de jogo */
+    transition: transform 0.1s ease, box-shadow 0.1s ease, background-color 0.2s;
+}
+
+/* Efeito de passar o mouse no botão enviar */
+#btn-enviar:hover {
+    background-color: #ffb347; /* Laranja mais claro */
+    transform: translateY(-2px); /* Sobe de leve */
+    box-shadow: 0px 6px 0px #cc7a00; /* Aumenta a sombra 3D */
+}
+
+/* Efeito de clique no botão enviar */
+#btn-enviar:active {
+    background-color: #cc7a00; /* Laranja mais escuro */
+    transform: translateY(2px); /* Afunda o botão */
+    box-shadow: 0px 2px 0px #cc7a00; /* Diminui a sombra 3D */
+}
+
+.alerta-erro {
+    background-color: #ffebee; 
+    color: #c62828; 
+    border: 1px solid #ef9a9a; 
+    border-radius: 4px; 
+    margin: 15px 0 5px 0; 
+    text-align: center; 
+    font-weight: bold;
+    font-size: 14px;
+    box-sizing: border-box;
+    width: 100%;
+}

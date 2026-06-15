@@ -272,7 +272,7 @@ CREATE TABLE Usuarios (
   id SERIAL PRIMARY KEY,
   nome VARCHAR(40),
   email VARCHAR(40),
-  senha_hash VARCHAR(67)
+  senha_hash VARCHAR(67),
   is_membro BOOLEAN DEFAULT FALSE
 );
 ```

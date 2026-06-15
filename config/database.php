@@ -17,7 +17,6 @@ try {
     ]);
 
 } catch (PDOException $e) {
-    // Se der erro, interrompe a execução e mostra o problema
     die("Erro ao conectar ao banco de dados: " . $e->getMessage());
 }
 

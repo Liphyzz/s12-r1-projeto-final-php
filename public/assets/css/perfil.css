@@ -1,0 +1,119 @@
+/* ==========================================================================
+   PERFIL CSS - Complementar ao style.css padrão
+   ========================================================================== */
+
+/* Container principal que centraliza o card no meio do seu main */
+.div-principal {
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 0 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Título de boas-vindas personalizado */
+.title {
+    font-size: 1.5rem;
+    color: #333333;
+    text-align: center;
+    margin-bottom: 25px;
+    font-weight: bolder;
+}
+
+/* O Card onde ficam as informações do usuário */
+.perfil-card {
+    background-color: #fffcf5; /* Um bege bem clarinho para contrastar com o fundo do main */
+    border: 2px solid #00000015; /* Seguindo o padrão de bordas discretas do seu menu */
+    border-radius: 12px;
+    padding: 30px;
+    width: 100%;
+    max-width: 480px;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.05); /* Sombra leve para dar profundidade */
+}
+
+/* Título interno do card */
+.perfil-card h2 {
+    margin-top: 0;
+    font-size: 1.3rem;
+    color: #444444;
+    text-align: center;
+}
+
+/* Linha divisória que combina com o topo do seu footer */
+.perfil-card hr {
+    border: 0;
+    height: 1px;
+    background-color: #00000020;
+    margin: 15px 0 20px 0;
+}
+
+/* Informações de texto */
+.perfil-info p {
+    font-size: 1.1rem;
+    color: #444444;
+    margin: 14px 0;
+}
+
+/* Badge estilizada para o status (userlvl) puxando o laranja do seu header */
+.badge-status {
+    background-color: #FFA425; /* Cor exata do seu header-banner */
+    color: #ffffff;
+    padding: 3px 10px;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    display: inline-block;
+    margin-left: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Alinhamento dos botões */
+.perfil-acoes {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    margin-top: 25px;
+}
+
+/* Botões baseados no comportamento visual do seu .nav-btn */
+.btn-logout, .btn-login {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 20px;
+    font-size: 1rem;
+    font-weight: bolder;
+    text-decoration: none;
+    border-radius: 6px;
+    transition: transform 0.1s ease, filter 0.1s ease;
+}
+
+/* Botão de Login seguindo os tons dos botões do menu */
+.btn-login {
+    background-color: #EFE2CF;
+    color: inherit;
+    border: 1px solid #00000015;
+}
+
+/* Botão de Logout com tom de destaque/alerta */
+.btn-logout {
+    background-color: #d9534f;
+    color: #ffffff;
+    border: 1px solid #00000020;
+}
+
+/* Efeito Hover idêntico ao que você criou para a navbar */
+.btn-login:hover, .btn-logout:hover {
+    transform: scale(1.08);
+}
+
+.btn-login:hover {
+    color: #FFA425;
+}
+
+/* Efeito Active puxando o filtro de brilho que você usou */
+.btn-login:active, .btn-logout:active {
+    filter: brightness(0.85);
+}
