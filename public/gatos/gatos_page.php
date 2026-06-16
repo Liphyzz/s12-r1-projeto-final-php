@@ -23,8 +23,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $userlvl == "membro") {
     $custo = !empty($_POST['custo']) ? (int)$_POST['custo'] : 0;
     $imagem = $_POST['imagem'] ?? '';
 
-    $bom_contra_texto = trim($_POST['bom_contra'] ?? '');
-    $bom_contra = !empty($bom_contra_texto) ? '{' . implode(',', array_map('trim', explode(',', $bom_contra_texto))) . '}' : '{}';
+    $bom_contra_array = $_POST['bom_contra'] ?? [];
+    if (!empty($bom_contra_array) && is_array($bom_contra_array)) {
+        $bom_contra = '{' . implode(',', array_map('trim', $bom_contra_array)) . '}';
+    } else {
+        $bom_contra = '{}';
+    }
 
     $hab_especiais_texto = trim($_POST['hab_especiais'] ?? '');
     if (!empty($hab_especiais_texto)) {
@@ -82,23 +86,91 @@ $mostrarFormulario = isset($_GET['crud']) && $_GET['crud'] == 'create';
                 <!-- 2. FORMULÁRIO DE CADASTRO -->
                 <?php if ($mostrarFormulario): ?>
                     <form method="POST">
-                        <div class="form-grupo"><label>Nome do Gato:</label><input type="text" name="nome" required maxlength="40"></div>
-                        <div class="form-grupo"><label>Raridade:</label><input type="text" name="raridade" maxlength="15" placeholder="Ex: Raro"></div>
-                        <div class="form-grupo"><label>Vida:</label><input type="number" name="vida"></div>
-                        <div class="form-grupo"><label>Ataque (atq):</label><input type="number" name="atq"></div>
-                        <div class="form-grupo"><label>Velocidade de Ataque:</label><input type="number" step="0.01" name="vel_atq" placeholder="0.00"></div>
-                        <div class="form-grupo"><label>DPS:</label><input type="number" step="0.01" name="dps" placeholder="0.00"></div>
-                        <div class="form-grupo"><label>Alcance do Ataque:</label><input type="number" name="alcance_atq"></div>
-                        <div class="form-grupo"><label>Tipo de Ataque:</label><input type="text" name="tipo_atq" maxlength="5" placeholder="Ex: Área"></div>
-                        <div class="form-grupo"><label>Velocidade de Movimento:</label><input type="number" step="0.1" name="vel_movimento" placeholder="0.0"></div>
-                        <div class="form-grupo"><label>Quantidade de Knockbacks:</label><input type="number" name="qtde_knockbacks"></div>
-                        <div class="form-grupo"><label>Tempo de Recarga:</label><input type="number" step="0.01" name="tmp_recarga_unidade" placeholder="0.00"></div>
-                        <div class="form-grupo"><label>Level Máximo:</label><input type="number" name="lvl_max"></div>
-                        <div class="form-grupo"><label>Leveis Adicionais:</label><input type="number" name="lvls_adicionais"></div>
-                        <div class="form-grupo"><label>Bom Contra (Separe por vírgula):</label><input type="text" name="bom_contra" placeholder="Ex: Alien"></div>
-                        <div class="form-grupo"><label>Habilidades Especiais (Uma por linha):</label><textarea name="hab_especiais" rows="4" placeholder="Ex:&#10;Dano triplo"></textarea></div>
-                        <div class="form-grupo"><label>Custo:</label><input type="number" name="custo"></div>
-                        <div class="form-grupo"><label>URL da Imagem:</label><input type="text" name="imagem" maxlength="200" placeholder="http://..."></div>
+                        <div class="form-grupo">
+                            <label>Nome do Gato:</label>
+                            <input type="text" name="nome" required maxlength="40">
+                        </div>
+                        <div class="form-grupo">
+                            <label for="raridade">Raridade:</label>
+                            <select name="raridade" id="raridade" class="select-custom" required>
+                                <option value="Normal">Normal</option>
+                                <option value="Especial">Especial</option>
+                                <option value="Raro">Raro</option>
+                                <option value="Super Raro">Super Raro</option>
+                                <option value="Uber Super Raro">Uber Super Raro</option>
+                                <option value="Lenda Rara">Lenda Rara</option>
+                            </select>
+                        </div>
+                        <div class="form-grupo">
+                            <label>Vida:</label>
+                            <input type="number" name="vida">
+                        </div>
+                        <div class="form-grupo">
+                            <label>Ataque:</label>
+                            <input type="number" name="atq">
+                        </div>
+                        <div class="form-grupo">
+                            <label>Velocidade de Ataque:</label>
+                            <input type="number" step="0.01" name="vel_atq" placeholder="0.00">
+                        </div>
+                        <div class="form-grupo">
+                            <label>Alcance do Ataque:</label>
+                            <input type="number" name="alcance_atq">
+                        </div>
+                        <div class="form-grupo">
+                            <label for="tipo_atq">Tipo de Ataque:</label>
+                            <select name="tipo_atq" id="tipo_atq" class="select-custom" required>
+                                <option value="Único">Único</option>
+                                <option value="Área">Área</option>
+                            </select>
+                        </div>
+                        <div class="form-grupo">
+                            <label>Velocidade de Movimento:</label>
+                            <input type="number" step="0.1" name="vel_movimento" placeholder="0.0">
+                        </div>
+                        <div class="form-grupo">
+                            <label>Quantidade de Knockbacks:</label>
+                            <input type="number" name="qtde_knockbacks">
+                        </div>
+                        <div class="form-grupo">
+                            <label>Tempo de Recarga:</label>
+                            <input type="number" step="0.01" name="tmp_recarga_unidade" placeholder="0.00">
+                        </div>
+                        <div class="form-grupo">
+                            <label>Level Máximo:</label>
+                            <input type="number" name="lvl_max">
+                        </div>
+                        <div class="form-grupo">
+                            <label>Leveis Adicionais:</label>
+                            <input type="number" name="lvls_adicionais">
+                        </div>
+                        <div class="form-grupo">
+                            <label for="bom_contra">Bom Contra (Segure Ctrl para selecionar vários):</label>
+                            <select name="bom_contra[]" id="bom_contra" class="select-multiple-custom" multiple>
+                                <option value="Vermelho">Vermelho</option>
+                                <option value="Flutuante">Flutuante</option>
+                                <option value="Preto">Preto</option>
+                                <option value="Metal">Metal</option>
+                                <option value="Anjo">Anjo</option>
+                                <option value="Alien">Alien</option>
+                                <option value="Zumbi">Zumbi</option>
+                                <option value="Relíquia">Relíquia</option>
+                                <option value="Aku">Aku</option>
+                                <option value="Sem Características">Sem Características</option>
+                            </select>
+                        </div>
+                        <div class="form-grupo">
+                            <label>Habilidades Especiais (Uma por linha):</label>
+                            <textarea name="hab_especiais" rows="4" placeholder="Ex:&#10;Dano triplo"></textarea>
+                        </div>
+                        <div class="form-grupo">
+                            <label>Custo:</label>
+                            <input type="number" name="custo">
+                        </div>
+                        <div class="form-grupo">
+                            <label>URL da Imagem:</label>
+                            <input type="text" name="imagem" maxlength="200" placeholder="http://...">
+                        </div>
                         <button type="submit">Salvar Gato</button>
                     </form>
                 <?php endif; ?>
@@ -109,7 +181,11 @@ $mostrarFormulario = isset($_GET['crud']) && $_GET['crud'] == 'create';
                 <?php foreach($gatos as $gato): ?>
                     <div class="galeria-item">
                         <a href="gato_page.php?id=<?= $gato['id'] ?>">
-                            <img src="<?= htmlspecialchars($gato['imagem']) ?>" alt="">
+                            <?php if (!empty($gato['imagem'])): ?>
+                                <img src="<?= htmlspecialchars($gato['imagem']) ?>" alt="">
+                            <?php else: ?>
+                                <img src="../assets/img/unknown.svg" alt="">
+                            <?php endif ?>
                             <h2><?= htmlspecialchars($gato['nome']) ?></h2>
                         </a>
                     </div>

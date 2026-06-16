@@ -180,6 +180,35 @@
     color: #4a3b2c;
     background-color: #fffaf0; /* Fundo suave combinando com o fundo dos cards */
     box-sizing: border-box; /* Impede que o campo passe da linha do formulário */
+    font-family: inherit;
+}
+
+/* ⬇️ CUSTOMIZAÇÃO EXCLUSIVA PARA OS CAMPOS SELECT ⬇️ */
+.form-grupo select {
+    cursor: pointer;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    /* Injeta uma setinha preta minimalista em formato de triângulo */
+    background-image: url("data:image/svg+xml;utf8,<svg fill='%234a3b2c' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/><path d='M0 0h24v24H0z' fill='none'/></svg>");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    padding-right: 35px; /* Espaço para o texto não passar por cima da seta */
+}
+
+/* ⬇️ TRATAMENTO EXCLUSIVO PARA O SELECT MULTIPLE (BOM CONTRA) ⬇️ */
+.form-grupo select[multiple] {
+    height: 140px;
+    padding: 8px;
+    background-image: none; /* Remove a setinha, já que é uma caixa de listagem */
+    padding-right: 10px;    /* Restaura o padding normal na direita */
+}
+
+/* Estilização sutil das opções internas da lista múltipla */
+.form-grupo select[multiple] option {
+    padding: 6px;
+    border-radius: 4px;
+    margin-bottom: 2px;
 }
 
 /* Efeito de foco ao clicar no campo de texto */
@@ -188,6 +217,7 @@
 .form-grupo textarea:focus {
     outline: none;
     border-color: #fb8500; /* Borda laranja ao selecionar */
+    background-color: #ffffff; /* Fundo fica branco puro para destacar a digitação */
 }
 
 /* Garante que o usuário possa aumentar a caixa de frases apenas para baixo */

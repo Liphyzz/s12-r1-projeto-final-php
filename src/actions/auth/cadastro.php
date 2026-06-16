@@ -8,13 +8,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($_POST['email']) && !empty($
     $email = trim($_POST['email']);
     $senha = trim($_POST['senha']);
     $senha_hash = password_hash($senha, PASSWORD_DEFAULT);
-    $userlvl_cadastro = $_POST['userlvl'] ?? 'user comum';
+    $userlvl    = trim($_POST['userlvl'] ?? '');
 
-    if ($userlvl_cadastro === 'membro') {
-        $is_membro = true;
-    } else {
-        $is_membro = false;
-    }
+    // Convertemos para 1 (true) ou 0 (false) para o banco de dados não se confundir
+    $is_membro  = ($userlvl === 'membro') ? 1 : 0;
 
 
     $sql = "SELECT id FROM Usuarios WHERE email = :email";

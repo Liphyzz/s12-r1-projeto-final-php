@@ -101,3 +101,36 @@ form input:focus {
     box-sizing: border-box;
     width: 100%;
 }
+
+#userlvl {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    margin-bottom: 15px;
+    border: 1px solid #9e9e9e; /* Cor aproximada da borda dos seus inputs */
+    border-radius: 4px;
+    background-color: #ffffff;
+    font-family: inherit; /* Herda a mesma fonte cartoon/arredondada do formulário */
+    font-size: 14px;
+    color: #333333;
+    box-sizing: border-box;
+    cursor: pointer;
+    
+    /* Remove a setinha padrão do sistema para podermos customizar ou deixar limpo */
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    
+    /* Adiciona uma setinha customizada sutil via background image */
+    background-image: url("data:image/svg+xml;utf8,<svg fill='black' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/><path d='M0 0h24v24H0z' fill='none'/></svg>");
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    padding-right: 30px; /* Garante que o texto não sobreponha a seta */
+}
+
+/* Efeito de foco quando o usuário clica no campo */
+#userlvl:focus {
+    outline: none;
+    border-color: #fca434; /* Uma corzinha laranja combinando com seu botão Enviar */
+    box-shadow: 0 0 4px rgba(252, 164, 52, 0.4);
+}

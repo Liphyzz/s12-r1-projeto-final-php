@@ -39,9 +39,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['acao_editar']) && $us
     $custo = !empty($_POST['custo']) ? (int)$_POST['custo'] : 0;
     $imagem = $_POST['imagem'] ?? '';
 
-    // Tratamento dos Arrays do Postgres
-    $bom_contra_texto = trim($_POST['bom_contra'] ?? '');
-    $bom_contra = !empty($bom_contra_texto) ? '{' . implode(',', array_map('trim', explode(',', $bom_contra_texto))) . '}' : '{}';
+    // --- CORREÇÃO AQUI: Captura o array vindo do select multiple ---
+    $bom_contra_array = $_POST['bom_contra'] ?? [];
+    if (!empty($bom_contra_array) && is_array($bom_contra_array)) {
+        $bom_contra = '{' . implode(',', array_map('trim', $bom_contra_array)) . '}';
+    } else {
+        $bom_contra = '{}';
+    }
 
     $hab_especiais_texto = trim($_POST['hab_especiais'] ?? '');
     if (!empty($hab_especiais_texto)) {
@@ -58,7 +62,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['acao_editar']) && $us
     $stmtUpdate = $pdo->prepare($sql);
     $stmtUpdate->execute([':nome'=>$nome,':raridade'=>$raridade,':vida'=>$vida,':atq'=>$atq,':vel_atq'=>$vel_atq,':dps'=>$dps,':alcance_atq'=>$alcance_atq,':tipo_atq'=>$tipo_atq,':vel_movimento'=>$vel_movimento,':qtde_knockbacks'=>$qtde_knockbacks,':tmp_recarga_unidade'=>$tmp_recarga_unidade,':lvl_max'=>$lvl_max,':lvls_adicionais'=>$lvls_adicionais,':bom_contra'=>$bom_contra,':hab_especiais'=>$hab_especiais,':custo'=>$custo,':imagem'=>$imagem,':id'=>$id]);
     
-    header("Location: gato.php?id=" . $id);
+    header("Location: gato_page.php?id=" . $id);
     exit;
 }
 
@@ -89,15 +93,17 @@ $mostrarFormEdicao = isset($_GET['modo']) && $_GET['modo'] === 'editar' && $user
     <main>
         <div class="container-principal">
             
-            <!-- LINK DE VOLTAR PARA A GALERIA -->
             <a href="gatos_page.php">⬅ Voltar para a Galeria</a>
 
             <?php if (!$mostrarFormEdicao): ?>
-                <!-- TELA DE DETALHES VISÍVEIS -->
                 <div class="card-detalhes">
                     
                     <div class="topo-gato">
-                        <img src="<?= htmlspecialchars($gato['imagem']) ?>" alt="">
+                        <?php if (!empty($gato['imagem'])): ?>
+                                <img src="<?= htmlspecialchars($gato['imagem']) ?>" alt="">
+                            <?php else: ?>
+                                <img src="../assets/img/unknown.svg" alt="">
+                            <?php endif ?>
                         <h1><?= htmlspecialchars($gato['nome']) ?></h1>
                     </div>
 
@@ -121,7 +127,6 @@ $mostrarFormEdicao = isset($_GET['modo']) && $_GET['modo'] === 'editar' && $user
                         <div class="caixa-habilidades"><?= htmlspecialchars(str_replace(['"', '\\'], '', trim($gato['hab_especiais'], '{}'))) ?></div>
                     </div>
 
-                    <!-- BOTÕES DE MEMBRO (EDITAR/DELETAR) -->
                     <?php if ($userlvl == "membro"): ?>
                         <div class="grupo-botoes-membro">
                             <a href="?id=<?= $id ?>&modo=editar" class="btn-membro btn-editar">Editar Gato</a>
@@ -131,31 +136,105 @@ $mostrarFormEdicao = isset($_GET['modo']) && $_GET['modo'] === 'editar' && $user
                 </div>
 
             <?php else: ?>
-                <!-- FORMULÁRIO DE EDIÇÃO (MODO EDITAR) -->
                 <form method="POST">
                     <input type="hidden" name="acao_editar" value="1">
                     <h2>Editando Gato</h2>
 
-                    <div class="form-grupo"><label>Nome:</label><input type="text" name="nome" required value="<?= htmlspecialchars($gato['nome']) ?>"></div>
-                    <div class="form-grupo"><label>Raridade:</label><input type="text" name="raridade" value="<?= htmlspecialchars($gato['raridade']) ?>"></div>
-                    <div class="form-grupo"><label>Vida:</label><input type="number" name="vida" value="<?= $gato['vida'] ?>"></div>
-                    <div class="form-grupo"><label>Ataque:</label><input type="number" name="atq" value="<?= $gato['atq'] ?>"></div>
-                    <div class="form-grupo"><label>Velocidade de Ataque:</label><input type="number" step="0.01" name="vel_atq" value="<?= $gato['vel_atq'] ?>"></div>
-                    <div class="form-grupo"><label>DPS:</label><input type="number" step="0.01" name="dps" value="<?= $gato['dps'] ?>"></div>
-                    <div class="form-grupo"><label>Alcance:</label><input type="number" name="alcance_atq" value="<?= $gato['alcance_atq'] ?>"></div>
-                    <div class="form-grupo"><label>Tipo de Ataque:</label><input type="text" name="tipo_atq" value="<?= htmlspecialchars($gato['tipo_atq']) ?>"></div>
-                    <div class="form-grupo"><label>Velocidade de Movimento:</label><input type="number" step="0.1" name="vel_movimento" value="<?= $gato['vel_movimento'] ?>"></div>
-                    <div class="form-grupo"><label>Knockbacks:</label><input type="number" name="qtde_knockbacks" value="<?= $gato['qtde_knockbacks'] ?>"></div>
-                    <div class="form-grupo"><label>Tempo Recarga:</label><input type="number" step="0.01" name="tmp_recarga_unidade" value="<?= $gato['tmp_recarga_unidade'] ?>"></div>
-                    <div class="form-grupo"><label>Lvl Max:</label><input type="number" name="lvl_max" value="<?= $gato['lvl_max'] ?>"></div>
-                    <div class="form-grupo"><label>Lvls Adicionais:</label><input type="number" name="lvls_adicionais" value="<?= $gato['lvls_adicionais'] ?>"></div>
-                    <div class="form-grupo"><label>Bom Contra:</label><input type="text" name="bom_contra" value="<?= htmlspecialchars(trim($gato['bom_contra'], '{}')) ?>"></div>
-                    <div class="form-grupo"><label>Habilidades Especiais (Uma por linha):</label><textarea name="hab_especiais" rows="4"><?= htmlspecialchars(str_replace(['"', '\\'], '', trim($gato['hab_especiais'], '{}'))) ?></textarea></div>
-                    <div class="form-grupo"><label>Custo:</label><input type="number" name="custo" value="<?= $gato['custo'] ?>"></div>
-                    <div class="form-grupo"><label>URL Imagem:</label><input type="text" name="imagem" value="<?= htmlspecialchars($gato['imagem']) ?>"></div>
+                    <div class="form-grupo">
+                        <label>Nome:</label>
+                        <input type="text" name="nome" required value="<?= htmlspecialchars($gato['nome']) ?>">
+                    </div>
+                    
+                    <div class="form-grupo">
+                        <label for="raridade">Raridade:</label>
+                        <select name="raridade" id="raridade" class="select-custom" required>
+                            <option value="Normal" <?= $gato['raridade'] == 'Normal' ? 'selected' : '' ?>>Normal</option>
+                            <option value="Especial" <?= $gato['raridade'] == 'Especial' ? 'selected' : '' ?>>Especial</option>
+                            <option value="Raro" <?= $gato['raridade'] == 'Raro' ? 'selected' : '' ?>>Raro</option>
+                            <option value="Super Raro" <?= $gato['raridade'] == 'Super Raro' ? 'selected' : '' ?>>Super Raro</option>
+                            <option value="Uber Super Raro" <?= $gato['raridade'] == 'Uber Super Raro' ? 'selected' : '' ?>>Uber Super Raro</option>
+                            <option value="Lenda Rara" <?= $gato['raridade'] == 'Lenda Rara' ? 'selected' : '' ?>>Lenda Rara</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-grupo">
+                        <label>Vida:</label>
+                        <input type="number" name="vida" value="<?= $gato['vida'] ?>">
+                    </div>
+                    <div class="form-grupo">
+                        <label>Ataque:</label>
+                        <input type="number" name="atq" value="<?= $gato['atq'] ?>">
+                    </div>
+                    <div class="form-grupo">
+                        <label>Velocidade de Ataque:</label>
+                        <input type="number" step="0.01" name="vel_atq" value="<?= $gato['vel_atq'] ?>">
+                    </div>
+                    <div class="form-grupo">
+                        <label>Alcance:</label>
+                        <input type="number" name="alcance_atq" value="<?= $gato['alcance_atq'] ?>">
+                    </div>
+                    
+                    <div class="form-grupo">
+                        <label for="tipo_atq">Tipo de Ataque:</label>
+                        <select name="tipo_atq" id="tipo_atq" class="select-custom" required>
+                            <option value="Único" <?= $gato['tipo_atq'] == 'Único' ? 'selected' : '' ?>>Único</option>
+                            <option value="Área" <?= $gato['tipo_atq'] == 'Área' ? 'selected' : '' ?>>Área</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-grupo">
+                        <label>Velocidade de Movimento:</label>
+                        <input type="number" step="0.1" name="vel_movimento" value="<?= $gato['vel_movimento'] ?>">
+                    </div>
+                    <div class="form-grupo">
+                        <label>Knockbacks:</label>
+                        <input type="number" name="qtde_knockbacks" value="<?= $gato['qtde_knockbacks'] ?>">
+                    </div>
+                    <div class="form-grupo">
+                        <label>Tempo Recarga:</label>
+                        <input type="number" step="0.01" name="tmp_recarga_unidade" value="<?= $gato['tmp_recarga_unidade'] ?>">
+                    </div>
+                    <div class="form-grupo">
+                        <label>Lvl Max:</label>
+                        <input type="number" name="lvl_max" value="<?= $gato['lvl_max'] ?>">
+                    </div>
+                    <div class="form-grupo">
+                        <label>Lvls Adicionais:</label>
+                        <input type="number" name="lvls_adicionais" value="<?= $gato['lvls_adicionais'] ?>">
+                    </div>
+                    
+                    <div class="form-grupo">
+                        <label for="bom_contra">Bom Contra (Segure Ctrl para selecionar vários):</label>
+                        <select name="bom_contra[]" id="bom_contra" class="select-multiple-custom" multiple>
+                            <?php 
+                            $bom_contra_atual = isset($gato['bom_contra']) ? (is_array($gato['bom_contra']) ? $gato['bom_contra'] : explode(',', trim($gato['bom_contra'], '{}'))) : [];
+                            $tipos_inimigos = ['Vermelho', 'Flutuante', 'Preto', 'Metal', 'Anjo', 'Alien', 'Zumbi', 'Relíquia', 'Aku', 'Sem Características'];
+                            
+                            foreach ($tipos_inimigos as $tipo): 
+                                $selected = in_array($tipo, $bom_contra_atual) ? 'selected' : '';
+                            ?>
+                                <option value="<?= $tipo ?>" <?= $selected ?>><?= $tipo ?></option>
+                            <?php endforeach; ?>
+                        </select>
+                    </div>
+                    
+                    <div class="form-grupo">
+                        <label>Habilidades Especiais (Uma por linha):</label>
+                        <textarea name="hab_especiais" rows="4"><?= htmlspecialchars(str_replace(['"', '\\'], '', trim($gato['hab_especiais'], '{}'))) ?></textarea>
+                    </div>
+                    <div class="form-grupo">
+                        <label>Custo:</label>
+                        <input type="number" name="custo" value="<?= $gato['custo'] ?>">
+                    </div>
+                    <div class="form-grupo">
+                        <label>URL Imagem:</label>
+                        <input type="text" name="imagem" value="<?= htmlspecialchars($gato['imagem']) ?>">
+                    </div>
 
                     <button type="submit">Salvar Alterações</button>
-                    <p style="text-align: center; margin-top: 15px;"><a href="?id=<?= $id ?>" style="color: #4a3b2c; font-weight: bold;">Cancelar Edição</a></p>
+                    <p style="text-align: center; margin-top: 15px;">
+                        <a href="?id=<?= $id ?>" style="color: #4a3b2c; font-weight: bold;">Cancelar Edição</a>
+                    </p>
                 </form>
             <?php endif; ?>
 
