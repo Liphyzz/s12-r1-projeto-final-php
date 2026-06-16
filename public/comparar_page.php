@@ -12,7 +12,7 @@
 <body>
     <?php require_once "../includes/header.php"; ?>
     <main>
-        
+        Em breve...
     </main>
     <?php require_once "../includes/footer.php"; ?>
 </body>

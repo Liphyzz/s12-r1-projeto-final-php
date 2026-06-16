@@ -12,7 +12,7 @@
 <body>
     <?php require_once "../../includes/header.php"; ?>
     <main>
-        
+        recursos_page está em desenvolvimento...
     </main>
     <?php require_once "../../includes/footer.php"; ?>
 </body>

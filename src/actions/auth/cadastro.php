@@ -8,6 +8,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($_POST['email']) && !empty($
     $email = trim($_POST['email']);
     $senha = trim($_POST['senha']);
     $senha_hash = password_hash($senha, PASSWORD_DEFAULT);
+    $userlvl_cadastro = $_POST['userlvl'] ?? 'user comum';
+
+    if ($userlvl_cadastro === 'membro') {
+        $is_membro = true;
+    } else {
+        $is_membro = false;
+    }
 
 
     $sql = "SELECT id FROM Usuarios WHERE email = :email";
@@ -19,13 +26,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($_POST['email']) && !empty($
         $msg_alerta = "<p class='alert'>Este e-mail já está cadastrado no sistema</p>";
         $sucesso_cadastro = false;
     } else {
-        $sql = "INSERT INTO usuarios (nome, email, senha_hash) VALUES (:nome, :email, :senha_hash)";
+        $sql = "INSERT INTO usuarios (nome, email, senha_hash, is_membro) VALUES (:nome, :email, :senha_hash, :is_membro)";
         $stmt = $pdo->prepare($sql);
         $stmt->execute(
             [
                 'nome' => $username,
                 'email' => $email,
-                'senha_hash' => $senha_hash
+                'senha_hash' => $senha_hash,
+                'is_membro' => $is_membro
             ]
         );
         $msg_alerta = "<p class='alert'>Cadastro realizado com sucesso!</p>";

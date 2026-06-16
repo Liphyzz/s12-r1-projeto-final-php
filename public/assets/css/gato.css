@@ -1,0 +1,221 @@
+/* ==========================================================================
+   ESTILO EXCLUSIVO DA PÁGINA DE DETALHES DO GATO (gato.php)
+   ========================================================================== */
+
+/* 1. CONTAINER PRINCIPAL 
+   Centraliza todo o conteúdo da página de detalhes na tela */
+.container-principal {
+    max-width: 600px;
+    margin: 40px auto;
+    padding: 0 20px;
+    font-family: sans-serif;
+    box-sizing: border-box;
+}
+
+/* Link de voltar estilizado como um botão de topo */
+.container-principal > a[href="gatos_page.php"] {
+    display: inline-block;
+    color: #4a3b2c;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 1rem;
+    margin-bottom: 20px;
+    transition: transform 0.2s ease;
+}
+
+.container-principal > a[href="gatos_page.php"]:hover {
+    transform: translateX(-4px); /* Dá um leve empurrãozinho para a esquerda no hover */
+}
+
+/* ==========================================================================
+   2. CARD DE DETALHES (Modo de Visualização)
+   ========================================================================== */
+
+/* Painel branco principal que guarda as informações do gato */
+.card-detalhes {
+    background-color: #ffffff;
+    border: 3px solid #4a3b2c;
+    border-radius: 12px;
+    padding: 25px;
+    box-shadow: 0 6px 0px rgba(74, 59, 44, 0.15);
+    margin-bottom: 30px;
+}
+
+/* Bloco superior com imagem e nome centralizados */
+.topo-gato {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 25px;
+}
+
+.topo-gato img {
+    max-width: 100%;
+    height: 200px;
+    object-fit: contain;
+    border: 3px solid #4a3b2c;
+    border-radius: 12px;
+    padding: 10px;
+    background-color: #fffaf0; /* Fundo suave */
+}
+
+.topo-gato h1 {
+    color: #4a3b2c;
+    font-size: 2rem;
+    margin: 15px 0 0 0;
+    text-align: center;
+    font-weight: bold;
+}
+
+/* Lista de estatísticas e textos */
+.info-gato p {
+    color: #4a3b2c;
+    font-size: 1.1rem;
+    line-height: 1.6;
+    margin: 10px 0;
+}
+
+.info-gato strong {
+    color: #fb8500; /* Destaca os títulos dos atributos em laranja */
+}
+
+/* A caixinha de habilidades especiais para o texto não ficar voando */
+.caixa-habilidades {
+    background-color: #fffaf0;
+    border: 2px solid #4a3b2c;
+    padding: 12px;
+    border-radius: 6px;
+    margin-top: 5px;
+    white-space: pre-wrap; /* Mantém as quebras de linha que o usuário digitou */
+    font-family: sans-serif;
+    color: #4a3b2c;
+    line-height: 1.5;
+}
+
+/* Bloco que segura os botões de Editar e Deletar lado a lado */
+.grupo-botoes-membro {
+    display: flex;
+    gap: 15px;
+    margin-top: 25px;
+}
+
+/* Estilo base para os botões administrativos do membro */
+.btn-membro {
+    flex: 1;
+    text-align: center;
+    padding: 12px;
+    font-weight: bold;
+    font-size: 1.1rem;
+    border: 3px solid #4a3b2c;
+    border-radius: 8px;
+    text-decoration: none;
+    cursor: pointer;
+    transition: transform 0.1s ease, box-shadow 0.1s ease;
+}
+
+.btn-editar {
+    background-color: #ffb703; /* Amarelo */
+    color: #4a3b2c;
+    box-shadow: 0 4px 0px #fb8500;
+}
+
+.btn-editar:hover { background-color: #ffc334; }
+
+.btn-deletar {
+    background-color: #dc3545; /* Vermelho */
+    color: white;
+    box-shadow: 0 4px 0px #bd2130;
+}
+
+.btn-deletar:hover { background-color: #c82333; }
+
+/* Efeito de afundar o botão ao clicar */
+.btn-membro:active {
+    transform: translateY(4px);
+    box-shadow: 0 0px 0px transparent;
+}
+
+/* ==========================================================================
+   3. FORMULÁRIO DE EDIÇÃO (Modo Editar)
+   ========================================================================== */
+
+/* Reutiliza o estilo de painel do jogo para o formulário */
+.container-principal > form {
+    background-color: #ffffff;
+    border: 3px solid #4a3b2c;
+    border-radius: 12px;
+    padding: 25px;
+    box-shadow: 0 6px 0px rgba(74, 59, 44, 0.15);
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.container-principal h2 {
+    color: #4a3b2c;
+    text-align: center;
+    margin-top: 0;
+    margin-bottom: 20px;
+    font-size: 1.6rem;
+}
+
+/* Organização vertical de cada linha do formulário */
+.form-grupo {
+    width: 100%;
+    margin-bottom: 15px;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+}
+
+.form-grupo label {
+    font-weight: bold;
+    color: #4a3b2c;
+    margin-bottom: 6px;
+    font-size: 1rem;
+}
+
+/* Inputs, caixas e caixas de texto grandes */
+.form-grupo input,
+.form-grupo textarea {
+    width: 100%;
+    border: 2px solid #4a3b2c;
+    padding: 10px;
+    border-radius: 6px;
+    font-size: 1rem;
+    color: #4a3b2c;
+    background-color: #fffaf0;
+    box-sizing: border-box;
+}
+
+.form-grupo input:focus,
+.form-grupo textarea:focus {
+    outline: none;
+    border-color: #fb8500;
+}
+
+.form-grupo textarea {
+    resize: vertical;
+}
+
+/* Botão verde de Salvar Alterações */
+.container-principal > form button[type="submit"] {
+    background-color: #28a745;
+    color: white;
+    font-size: 1.1rem;
+    font-weight: bold;
+    padding: 12px;
+    border: 3px solid #4a3b2c;
+    border-radius: 8px;
+    box-shadow: 0 4px 0px #218838;
+    width: 100%;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: transform 0.1s ease, box-shadow 0.1s ease;
+}
+
+.container-principal > form button[type="submit"]:hover { background-color: #218838; }
+
+.container-principal > form button[type="submit"]:active {
+    transform: translateY(4px);
+    box-shadow: 0 0px 0px transparent;
+}

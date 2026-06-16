@@ -10,7 +10,6 @@ main {
     width: 100%;
     margin: 0 auto;
     padding: 40px 20px;
-    font-family: 'Arial', sans-serif; /* Altere para a fonte do seu projeto se preferir */
 }
 
 /* Configuração de cada linha como Flexbox */
