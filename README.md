@@ -278,7 +278,7 @@ git clone https://github.com/Liphyzz/s12-r1-projeto-final-php.git
 Em seguida, entre na pasta do projeto:
 
 ```bash
-cd s12-r1-projeto-final-php
+cd s12-r1-projeto-final-php/public
 ```
 
 ### 11.5 Configurar e Restaurar o Banco de Dados (PostgreSQL)
@@ -302,7 +302,7 @@ cmd /c "psql -U seu_usuario -d nome_do_seu_banco -f caminho/para/o/dump.sql"
 Para rodar o projeto apontando diretamente para a pasta public (onde fica o ponto de entrada do sistema), execute o comando do servidor embutido do PHP na raiz do projeto:
 
 ```bash
-php -S localhost:8080 -t public
+php -S localhost:8080
 ```
 
 ### 11.7 Acessar o Projeto
