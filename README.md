@@ -243,10 +243,10 @@ O sistema será considerado válido se:
 ## 10. Entregáveis
 
 Link do projeto no github contendo:
-- Documentação
-- Prototipagem
-- Projeto em si
-- Dump do DB
+- Documentação (Esse arquivo)
+- Prototipagem (https://www.figma.com/design/eJZEOIJ3op9krGzUgdA4nv/Sem-t%C3%ADtulo?node-id=0-1&t=uECTeD4PmglQukA6-1)
+- Projeto em si (Esse projeto)
+- Dump do DB (dump_db.sql)
 
 ## 11. Como Testar o Projeto
 
