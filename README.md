@@ -246,7 +246,7 @@ Link do projeto no github contendo:
 - Documentação (Esse arquivo)
 - Prototipagem (https://www.figma.com/design/eJZEOIJ3op9krGzUgdA4nv/Sem-t%C3%ADtulo?node-id=0-1&t=uECTeD4PmglQukA6-1)
 - Projeto em si (Esse projeto)
-- Dump do DB (dump_db.sql)
+- Dump do DB (dump.sql)
 
 ## 11. Como Testar o Projeto
 
@@ -275,11 +275,6 @@ Abra o VS Code, abra o terminal integrado (`Ctrl + '` ou `Cmd + '` no Mac) e exe
 ```bash
 git clone https://github.com/Liphyzz/s12-r1-projeto-final-php.git
 ```
-Em seguida, entre na pasta do projeto:
-
-```bash
-cd s12-r1-projeto-final-php/public
-```
 
 ### 11.5 Configurar e Restaurar o Banco de Dados (PostgreSQL)
 Certifique-se de que o PostgreSQL está ativo na sua máquina.
@@ -289,18 +284,22 @@ Certifique-se de que o PostgreSQL está ativo na sua máquina.
 2. No terminal do VS Code, execute o comando abaixo para criar o banco de dados e importar a estrutura/dados do arquivo dump.sql:
 
 ```bash
-# Caso use o terminal do Linux/macOS ou Git Bash no Windows:
-psql -U seu_usuario -d nome_do_seu_banco -f caminho/para/o/dump.sql
-
-# Caso use o PowerShell no Windows:
-cmd /c "psql -U seu_usuario -d nome_do_seu_banco -f caminho/para/o/dump.sql"
+Linux, Mac ou o Git Bash no Windows:
+psql -U postgres -d nome_do_novo_banco -f dump.sql
 ```
-
+```bash
+PowerShell padrão do Windows:
+cmd /c "psql -U postgres -d nome_do_novo_banco -f dump.sql"
+```
 (Nota: O terminal solicitará a senha do seu usuário do PostgreSQL)
 
 ### 11.6 Iniciar o Servidor Nativo do PHP
-Para rodar o projeto apontando diretamente para a pasta public (onde fica o ponto de entrada do sistema), execute o comando do servidor embutido do PHP na raiz do projeto:
+Entre na pasta "public" para iniciar i servidor:
+```bash
+cd s12-r1-projeto-final-php/public
+```
 
+Para rodar o projeto, execute o comando do servidor embutido do PHP no terminal:
 ```bash
 php -S localhost:8080
 ```
@@ -311,3 +310,7 @@ Com o servidor rodando e o terminal ocupado, abra o seu navegador e acesse:
 http://localhost:8080
 
 Dica: Para encerrar o servidor no terminal do VS Code a qualquer momento, basta pressionar Ctrl + C.
+
+### 11.8 Login ADM
+Email: emailadm@gmail.com
+Senha: adm123456
