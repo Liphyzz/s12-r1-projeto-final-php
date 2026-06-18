@@ -31,12 +31,6 @@
                 <label for="senha">Senha:</label>
                 <input type="password" id="senha" name="senha" placeholder="senha" required>
 
-                <label for="userlvl">Tipo de Conta:</label>
-                <select name="userlvl" id="userlvl" required>
-                    <option value="user comum">Usuário Comum (Apenas ver os gatos)</option>
-                    <option value="membro">Membro (Pode adicionar, editar e deletar)</option>
-                </select>
-
                 
                 <button type="submit" id="btn-enviar">Enviar</button>
                 
