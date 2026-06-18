@@ -14,7 +14,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $userlvl == "membro") {
     $vel_atq = !empty($_POST['vel_atq']) ? (float)$_POST['vel_atq'] : 0.0;
     $dps = !empty($_POST['dps']) ? (float)$_POST['dps'] : 0.0;
     $alcance_atq = !empty($_POST['alcance_atq']) ? (int)$_POST['alcance_atq'] : 0;
-    $tipo_atq = $_POST['tipo_atq'] ?? '';
+    $tipo_atq = $_POST['tipo_atq'];
     $vel_movimento = !empty($_POST['vel_movimento']) ? (float)$_POST['vel_movimento'] : 0.0;
     $qtde_knockbacks = !empty($_POST['qtde_knockbacks']) ? (int)$_POST['qtde_knockbacks'] : 0;
     $tmp_recarga_unidade = !empty($_POST['tmp_recarga_unidade']) ? (float)$_POST['tmp_recarga_unidade'] : 0.0;
@@ -49,7 +49,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $userlvl == "membro") {
             VALUES (:nome, :raridade, :vida, :atq, :vel_atq, :dps, :alcance_atq, :tipo_atq, :vel_movimento, :qtde_knockbacks, :tmp_recarga_unidade, :lvl_max, :lvls_adicionais, :bom_contra, :hab_especiais, :custo, :imagem)";
 
     $stmtInsert = $pdo->prepare($sql);
-    $stmtInsert->execute([':nome' => $nome, ':raridade' => $raridade, ':vida' => $vida, ':atq' => $atq, ':vel_atq' => $vel_atq, ':dps' => $dps, ':alcance_atq' => $alcance_atq, ':tipo_atq' => $tipo_atq, ':vel_movimento' => $vel_movimento, ':qtde_knockbacks' => $qtde_knockbacks, ':tmp_recarga_unidade' => $tmp_recarga_unidade, ':lvl_max' => $lvl_max, ':lvls_adicionais' => $lvls_adicionais, ':bom_contra' => $bom_contra, ':hab_especiais' => $hab_especiais, ':custo' => $custo, ':imagem' => $imagem]);
+    $stmtInsert->execute([
+        'nome' => $nome, 
+        'raridade' => $raridade,
+        'vida' => $vida,
+        'atq' => $atq, 
+        'vel_atq' => $vel_atq, 
+        'dps' => $dps, 
+        'alcance_atq' => $alcance_atq, 
+        'tipo_atq' => $tipo_atq, 
+        'vel_movimento' => $vel_movimento, 
+        'qtde_knockbacks' => $qtde_knockbacks, 
+        'tmp_recarga_unidade' => $tmp_recarga_unidade, 
+        'lvl_max' => $lvl_max, 
+        'lvls_adicionais' => $lvls_adicionais, 
+        'bom_contra' => $bom_contra, 
+        'hab_especiais' => $hab_especiais, 
+        'custo' => $custo, 
+        'imagem' => $imagem
+        ]);
 
     header("Location: ?");
     exit;
@@ -88,7 +106,7 @@ $mostrarFormulario = isset($_GET['crud']) && $_GET['crud'] == 'create';
                     <form method="POST">
                         <div class="form-grupo">
                             <label>Nome do Gato:</label>
-                            <input type="text" name="nome" required maxlength="40">
+                            <input type="text" name="nome" maxlength="40" required>
                         </div>
                         <div class="form-grupo">
                             <label for="raridade">Raridade:</label>
